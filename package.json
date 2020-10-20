@@ -1,0 +1,16 @@
+{
+  "name": "userserver",
+  "version": "1.0.0",
+  "description": "Create simple server for the user registration and login",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Bawantha",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "nodemon": "^2.0.6"
+  }
+}
