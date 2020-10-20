@@ -16,9 +16,9 @@ router.post("/register", async (req, res) => {
   if (emailExist) return res.status(400).send("Email Already In Use");
 
   // encrypt password using crypto
-  let password = req.body.password;
+  const password = req.body.password;
   const key = "passwordencrypter";
-  let encryptedPassword = crypto
+  const encryptedPassword = crypto
     .createCipher("aes-256-ctr", key)
     .update(password, "utf8", "hex");
 
@@ -51,14 +51,15 @@ router.post("/login", async (req, res) => {
   if (!user) return res.status(404).send("Email Not In Use");
 
   // encrypt entered password
-  let enteredPassword = req.body.password;
+  const enteredPassword = req.body.password;
+  const storedPassword = user.password;
   const key = "passwordencrypter";
-  let encryptedEnteredPassword = crypto
-    .createCipher("aes-256-ctr", key)
-    .update(enteredPassword, "utf8", "hex");
+  const decryptedStoredPassword = crypto
+    .createDecipher("aes-256-ctr", key)
+    .update(storedPassword, "hex", "utf8");
 
   // compare entered password with password stored in the database
-  if (encryptedEnteredPassword === user.password) {
+  if (enteredPassword === decryptedStoredPassword) {
     // create a token and pass that token as the response
     const tokenSecret = "aa$#@kkj&*klkald!@kjkdfs$ksdfk%asdl#";
     const token = JWT.sign({ _id: user._id, email: user.email }, tokenSecret);
