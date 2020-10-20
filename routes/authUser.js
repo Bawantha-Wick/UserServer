@@ -33,7 +33,10 @@ router.post("/register", async (req, res) => {
   // Saving process validation
   try {
     const savedUser = await user.save();
-    res.send({ users: user._id });
+    // create a token and pass that token as the response
+    const tokenSecret = "aa$#@kkj&*klkald!@kjkdfs$ksdfk%asdl#";
+    const token = JWT.sign({ _id: user._id, email: user.email }, tokenSecret);
+    res.header("auth-token", token).send(token);
   } catch (error) {
     res.status(400).send(error);
   }
