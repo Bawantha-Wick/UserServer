@@ -1,4 +1,4 @@
-Run these commands after cloning,
+Commands used,
 
 npm install express
 npm install mongoose
